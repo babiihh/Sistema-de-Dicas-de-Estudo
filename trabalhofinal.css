@@ -1,0 +1,323 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+/* Cabeçalho */
+header {
+  background-color: #0077cc;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+/* Formulário de autenticação */
+#auth {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#auth input {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+}
+
+#auth button {
+  width: 100%;
+  padding: 10px;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#auth button:hover {
+  background-color: #005fa3;
+}
+
+/* Navegação */
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+nav button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #e0e0e0;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+nav button:hover {
+  background-color: #cfcfcf;
+}
+
+/* Conteúdo principal */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Seções */
+.secao {
+  display: none;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}
+
+/* Dicas */
+.dica {
+  border-left: 5px solid #0077cc;
+  background: #eef6ff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.dica button {
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+/* Notas */
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  resize: vertical;
+}
+
+ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+  }
+
+  nav button {
+    width: 100%;
+  }
+
+  body {
+    padding: 5px;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  main {
+    padding: 5px;
+  }
+
+  .dica {
+    font-size: 0.95rem;
+  }
+}
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  resize: vertical;
+  min-height: 150px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fefefe;
+}
+.abas {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.abas button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background-color: #ddd;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.abas button:hover {
+  background-color: #bbb;
+}
+
+.abaAtiva {
+  display: block;
+}
+
+.abaOculta {
+  display: none;
+}
+/* Estilo moderno para Minhas Notas */
+#listaNotas {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#listaNotas li {
+  background-color: #ffffff;
+  border-left: 5px solid #0077cc;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  position: relative;
+  transition: box-shadow 0.3s ease;
+}
+
+#listaNotas li:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+
+/* Botões dentro da nota */
+#listaNotas button {
+  margin-right: 10px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Botão excluir */
+#listaNotas button:nth-of-type(1) {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+#listaNotas button:nth-of-type(1):hover {
+  background-color: #cc0000;
+}
+
+/* Botão editar */
+#listaNotas button:nth-of-type(2) {
+  background-color: #ffaa00;
+  color: white;
+}
+
+#listaNotas button:nth-of-type(2):hover {
+  background-color: #cc8800;
+}
+
+/* Botão compartilhar */
+#listaNotas button:nth-of-type(3) {
+  background-color: #4caf50;
+  color: white;
+}
+
+#listaNotas button:nth-of-type(3):hover {
+  background-color: #3b8e40;
+}
+/* Estilo moderno para Dicas Favoritadas */
+#favoritos ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#favoritos li {
+  background-color: #f0f8ff;
+  border-left: 5px solid #0077cc;
+  padding: 12px 16px;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+#favoritos li:hover {
+  transform: scale(1.02);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+#horario {
+  background-color: #ffffff;
+  padding: 25px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 119, 204, 0.15);
+  max-width: 400px;
+  margin: 0 auto 20px auto;
+  text-align: center;
+}
+
+#horario h2 {
+  color: #0077cc;
+  margin-bottom: 15px;
+}
+
+#horario label {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #0077cc;
+  display: block;
+  margin-bottom: 10px;
+}
+
+#horarioInput {
+  width: 150px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 2px solid #0077cc;
+  border-radius: 6px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+#horarioInput:focus {
+  border-color: #005fa3;
+}
+
+#mensagemHorario {
+  margin-top: 15px;
+  font-size: 1rem;
+  color: #333333;
+  font-style: italic;
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+  #horario {
+    max-width: 100%;
+    padding: 20px 15px;
+  }
+  
+  #horarioInput {
+    width: 100%;
+  }
+}

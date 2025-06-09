@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cadastrar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="logincadastro.css" />
+</head>
+<body>
+  <div class="login-box">
+    <h2>Cadastrar</h2>
+    <form id="cadastroForm" onsubmit="cadastrar(event)">
+      <input type="text" id="usuario" placeholder="Usuário" required />
+      <input type="email" id="email" placeholder="E-mail" required />
+      <input type="password" id="senha" placeholder="Senha" required />
+      <button type="submit">Cadastrar</button>
+    </form>
+    <div class="register-link">
+      Já tem conta? <a href="login.html">Entrar</a>
+    </div>
+  </div>
+
+  <script>
+    function cadastrar(event) {
+      event.preventDefault(); // evita reload
+
+      const usuario = document.getElementById('usuario').value;
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+
+      const dadosUsuario = {
+        usuario: usuario,
+        email: email,
+        senha: senha,
+      };
+
+      // Recupera os usuários salvos ou cria uma lista vazia caso não existam
+      const usuariosSalvos = JSON.parse(localStorage.getItem('usuarios') || '[]');
+
+      // Adiciona o novo usuário à lista
+      usuariosSalvos.push(dadosUsuario);
+
+      // Salva a lista de usuários no localStorage
+      localStorage.setItem('usuarios', JSON.stringify(usuariosSalvos));
+
+      alert('Cadastro realizado com sucesso!');
+      window.location.href = 'login.html'; // Volta para o login
+    }
+  </script>
+</body>
+</html>

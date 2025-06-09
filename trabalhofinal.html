@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+  <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dicas de Estudo</title>
+  <link rel="stylesheet" href="trabalhofinal.css">
+  
+</head>
+<body>
+  
+<script>
+  if (!localStorage.getItem('usuarioLogado')) {
+    window.location.href = 'login.html';
+  }
+</script>
+
+
+
+  <header>
+    <h1>Dicas de Estudo e Produtividade</h1>
+  </header>
+
+
+
+  <nav>
+    <button onclick="mostrarSecao('tecnicas')">Técnicas de Estudo</button>
+    <button onclick="mostrarSecao('evitar')">Evite Distrações</button>
+    <button onclick="mostrarSecao('planejar')">Planejar o Dia</button>
+    <button onclick="mostrarSecao('horario')">Estude no Mesmo Horário</button>
+    <button onclick="mostrarSecao('favoritos')">Favoritos</button>
+    <button onclick="mostrarSecao('minhasNotas')">Minhas Notas</button>
+  </nav>
+
+  <main>
+    <section id="tecnicas" class="secao">
+      <h2>Técnicas de Estudo</h2>
+      <div class="dica">
+        <p><strong>Técnica do Timer:</strong> Estude por 25 minutos e descanse por 5.</p>
+        
+  
+</div>
+
+<div class="dica">
+  <h4>Mapas Mentais</h4>
+  <p>Crie esquemas visuais para conectar conceitos e ideias de forma organizada.</p>
+</div>
+
+<div class="dica">
+  <h4>Feynman</h4>
+  <p>Explique o conteúdo como se estivesse ensinando alguém que não sabe nada sobre o assunto.</p>
+</div>
+        
+      </div>
+    </section>
+
+    <section id="evitar" class="secao">
+      <h2>Evite Distrações</h2>
+      <div class="dica">
+        <p>Estude longe do celular ou ative o modo "Não Perturbe".</p>
+        <button onclick="favoritar(this)">Favoritar</button>
+        
+      </div>
+      <div class="dica">
+        <p>Avise sua família que está estudando.</p>
+        <button onclick="favoritar(this)">Favoritar</button>
+        
+      </div>
+      <div class="dica">
+        <p>Use aplicativos que bloqueiam redes sociais temporariamente.</p>
+        <button onclick="favoritar(this)">Favoritar</button>
+        
+      </div>
+      <h3>Sua Nota:</h3>
+      <textarea id="notaEvitar" placeholder="Digite suas anotações..."></textarea>
+      <button onclick="salvarNota('evitar')">Salvar Nota</button>
+      <button onclick="compartilhar(this)">Compartilhar</button>
+    </section>
+
+    <section id="planejar" class="secao">
+      <h2>Como Planejar seu Dia</h2>
+      <div class="dica">
+        <p>Liste suas tarefas mais importantes no início do dia.</p>
+        <button onclick="favoritar(this)">Favoritar</button>
+        
+      </div>
+      <div class="dica">
+        <p>Use uma agenda ou app como Google Agenda, Notion.</p>
+        <button onclick="favoritar(this)">Favoritar</button>
+        
+      </div>
+     <div class="dica">
+  <p>Divida o dia em blocos de tempo e reserve pausas.</p>
+  <button onclick="favoritar(this)">Favoritar</button>
+</div>
+
+<h3>Sua Nota:</h3>
+<textarea id="notaPlanejar" placeholder="Digite suas anotações..."></textarea>
+<button onclick="salvarNota('planejar')">Salvar Nota</button>
+<button onclick="compartilhar(this)">Compartilhar</button>
+    </section>
+
+    <section id="horario" class="secao">
+      <h2>Estude no Mesmo Horário</h2>
+      <label for="horarioInput">Escolha seu horário fixo:</label>
+      <input type="time" id="horarioInput" onchange="salvarHorario()" />
+      <p id="mensagemHorario"></p>
+      <p id="statusHorario"></p>
+
+    </section>
+
+    <section id="favoritos" class="secao">
+      <h2>Dicas Favoritadas</h2>
+      <ul id="listaFavoritos"></ul>
+    </section>
+
+    <section id="minhasNotas" class="secao">
+      <h2>Minhas Notas Salvas</h2>
+      <ul id="listaNotas"></ul>
+      
+    </section>
+  </main>
+
+  <script>
+    const secoes = document.querySelectorAll('.secao');
+    function mostrarSecao(id) {
+      secoes.forEach(sec => sec.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+      if (id === 'minhasNotas') {
+        mostrarNotasSalvas();
+      }
+    }
+    
+    function compartilharTexto(texto) {
+  if (navigator.share) {
+    navigator.share({ title: 'Dica de Estudo', text: texto });
+  } else {
+    navigator.clipboard.writeText(texto).then(() => alert('Dica copiada para compartilhar!'));
+  }
+}
+
+   function favoritar(botao) {
+  const texto = botao.parentElement.querySelector('p').innerText;
+  const lista = document.getElementById('listaFavoritos');
+  const itens = Array.from(lista.children).map(li => li.innerText);
+  if (!itens.includes(texto)) {
+    const li = document.createElement('li');
+    li.innerText = texto;
+    lista.appendChild(li);
+
+    // Salvar favoritos
+    const favoritosAtuais = JSON.parse(localStorage.getItem('favoritos') || '[]');
+    favoritosAtuais.push(texto);
+    localStorage.setItem('favoritos', JSON.stringify(favoritosAtuais));
+  }
+}
+
+
+
+    // Compartilhar
+    function compartilhar(botao) {
+      const texto = botao.parentElement.querySelector('p').innerText;
+      if (navigator.share) {
+        navigator.share({ title: 'Dica de Estudo', text: texto });
+      } else {
+        navigator.clipboard.writeText(texto).then(() => alert('Dica copiada para compartilhar!'));
+      }
+    }
+
+    // Salvar Horário
+    function salvarHorario() {
+      const horario = document.getElementById('horarioInput').value;
+      document.getElementById('mensagemHorario').innerText = `Seu horário de estudo: ${horario}`;
+      localStorage.setItem('horarioEstudo', horario);
+    }
+
+    // Salvar Notas com data e hora
+function salvarNota(tipo) {
+  const texto = document.getElementById('nota' + tipo.charAt(0).toUpperCase() + tipo.slice(1)).value;
+
+  if (texto.trim() !== '') {
+    const dataAtual = new Date();
+    const dataFormatada = dataAtual.toLocaleString(); // inclui data e hora
+
+    const notasSalvas = JSON.parse(localStorage.getItem('notasSalvas') || '[]');
+    notasSalvas.push({ tipo, texto, data: dataFormatada });
+    localStorage.setItem('notasSalvas', JSON.stringify(notasSalvas));
+
+    alert('Nota salva em "Minhas Notas".');
+    document.getElementById('nota' + capitalizar(tipo)).value = '';
+  }
+}
+
+    // Mostrar Notas com data/hora e botão de excluir
+function mostrarNotasSalvas() {
+  const lista = document.getElementById('listaNotas');
+  lista.innerHTML = '';
+  const notas = JSON.parse(localStorage.getItem('notasSalvas') || '[]');
+
+  notas.forEach((nota, index) => {
+    const li = document.createElement('li');
+
+    // Mostra tipo da nota, texto e data/hora
+    li.innerText = `${(nota.tipo || 'Nota').toUpperCase()}: ${nota.texto} (em ${nota.data || 'data desconhecida'})`;
+
+    // Botão EXCLUIR
+    const btnExcluir = document.createElement('button');
+    btnExcluir.innerText = 'Excluir';
+    btnExcluir.style.marginLeft = '10px';
+    btnExcluir.onclick = function () {
+      excluirNota(index);
+    };
+    // Botão EDITAR
+const btnEditar = document.createElement('button');
+btnEditar.innerText = 'Editar';
+btnEditar.style.marginLeft = '10px';
+btnEditar.onclick = function () {
+  editarNota(index);
+};
+
+    // Botão COMPARTILHAR
+    const btnCompartilhar = document.createElement('button');
+    btnCompartilhar.innerText = 'Compartilhar';
+    btnCompartilhar.style.marginLeft = '10px';
+    btnCompartilhar.onclick = function () {
+      compartilharTexto(`${(nota.tipo || 'Nota').toUpperCase()}: ${nota.texto} (em ${nota.data || 'data desconhecida'})`);
+    };
+    
+
+    // Adiciona os botões ao <li>
+    li.appendChild(btnExcluir);
+    li.appendChild(btnEditar);
+    li.appendChild(btnCompartilhar);
+    
+
+    // Adiciona o <li> à lista
+    lista.appendChild(li);
+  });
+}
+  function editarNota(index) {
+  const notas = JSON.parse(localStorage.getItem('notasSalvas') || '[]');
+  const notaAtual = notas[index];
+
+  const novaNota = prompt("Edite sua nota:", notaAtual.texto);
+
+  if (novaNota !== null && novaNota.trim() !== "") {
+    notaAtual.texto = novaNota;
+    notaAtual.data = new Date().toLocaleString(); // atualiza a data também
+    localStorage.setItem('notasSalvas', JSON.stringify(notas));
+    mostrarNotasSalvas(); // recarrega a lista
+  }
+}
+
+    function capitalizar(texto) {
+      return texto.charAt(0).toUpperCase() + texto.slice(1);
+    }
+    function excluirNota(index) {
+  const notas = JSON.parse(localStorage.getItem('notasSalvas') || '[]');
+  notas.splice(index, 1); // remove a nota pelo índice
+  localStorage.setItem('notasSalvas', JSON.stringify(notas));
+  mostrarNotasSalvas(); // atualiza a lista
+}
+ // Restaurar horário salvo ao abrir a página
+const horarioSalvo = localStorage.getItem('horarioEstudo');
+if (horarioSalvo) {
+  document.getElementById('horarioInput').value = horarioSalvo;
+  document.getElementById('mensagemHorario').innerText = `Seu horário de estudo: ${horarioSalvo}`;
+}
+
+// Restaurar dicas favoritadas
+const listaFavoritos = document.getElementById('listaFavoritos');
+const favoritosSalvos = JSON.parse(localStorage.getItem('favoritos') || '[]');
+favoritosSalvos.forEach(texto => {
+  const li = document.createElement('li');
+  li.innerText = texto;
+  listaFavoritos.appendChild(li);
+});
+
+    // Mostrar a primeira seção
+    mostrarSecao('tecnicas');
+  </script>
+  <button onclick="logout()">Sair</button>
+  <script>
+  function logout() {
+    localStorage.removeItem('usuarioLogado');
+    window.location.href = "login.html";
+  }
+ function pedirPermissaoNotificacao() {
+  if ('Notification' in window && Notification.permission !== 'granted') {
+    Notification.requestPermission();
+  }
+}
+
+function mostrarNotificacao(mensagem) {
+  if ('Notification' in window && Notification.permission === 'granted') {
+    new Notification(mensagem);
+  } else {
+    alert(mensagem);
+  }
+}
+
+function iniciarLembrete() {
+  const horarioSalvo = localStorage.getItem('horarioEstudo');
+  if (!horarioSalvo) return;
+
+  function checarHorario() {
+    const agora = new Date();
+    const horas = String(agora.getHours()).padStart(2, '0');
+    const minutos = String(agora.getMinutes()).padStart(2, '0');
+    const horarioAtual = `${horas}:${minutos}`;
+
+    if (horarioAtual === horarioSalvo) {
+      mostrarNotificacao('Hora de estudar! 📚');
+    }
+  }
+
+  // Checagem imediata
+  checarHorario();
+
+  // Checa a cada minuto depois
+  setInterval(checarHorario, 60000);
+}
+function atualizarStatusHorario() {
+  const horarioSalvo = localStorage.getItem('horarioEstudo');
+  const statusEl = document.getElementById('mensagemHorario');
+  
+  if (!horarioSalvo) {
+    statusEl.textContent = 'Nenhum horário de estudo definido.';
+    return;
+  }
+  
+  const agora = new Date();
+  const [horas, minutos] = horarioSalvo.split(':').map(Number);
+
+  const estudoHoje = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate(), horas, minutos);
+  
+  const diffMs = estudoHoje - agora;
+  const diffMin = Math.floor(diffMs / 60000);
+  
+  if (diffMin === 0) {
+    statusEl.textContent = 'Hora de estudar agora! 📚';
+  } else if (diffMin > 0) {
+    statusEl.textContent = `Faltam ${diffMin} minuto${diffMin > 1 ? 's' : ''} para estudar.`;
+  } else {
+    statusEl.textContent = 'O horário de estudo já passou hoje.';
+  }
+}
+
+// Atualiza a mensagem a cada minuto
+setInterval(atualizarStatusHorario, 1000 * 60);
+// Atualiza imediatamente ao carregar a página
+atualizarStatusHorario();
+
+
+// Aqui adiciona o evento para rodar depois que a página carregar
+window.addEventListener('load', () => {
+  pedirPermissaoNotificacao();
+  iniciarLembrete();
+});
+
+
+
+
+
+</script>
+</body>
+</html>
